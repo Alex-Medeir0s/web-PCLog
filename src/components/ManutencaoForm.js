@@ -40,84 +40,86 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="card shadow mt-4">
-      <div className="card-header bg-primary text-white">
-        <h5 className="mb-0">{manutencao?.id ? 'Editar Manutenção' : 'Nova Manutenção'}</h5>
-      </div>
-      <div className="card-body">
-        <form onSubmit={handleSubmit}>
-          {manutencao?.id && (
+    <div className="container d-flex justify-content-center mt-5">
+      <div className="card shadow-lg p-4" style={{ maxWidth: '600px', width: '100%', borderRadius: '16px' }}>
+        <div className="card-body">
+          <h4 className="text-center mb-4 text-primary">
+            {manutencao?.id ? 'Editar Manutenção' : 'Nova Manutenção'}
+          </h4>
+          <form onSubmit={handleSubmit}>
+            {manutencao?.id && (
+              <div className="mb-3">
+                <label className="form-label">ID:</label>
+                <input type="text" name="id" value={formData.id} readOnly className="form-control" />
+              </div>
+            )}
             <div className="mb-3">
-              <label className="form-label">ID:</label>
-              <input type="text" name="id" value={formData.id} readOnly className="form-control" />
+              <label className="form-label">Equipamento:</label>
+              <input
+                type="text"
+                name="equipamento"
+                value={formData.equipamento}
+                onChange={handleChange}
+                className="form-control"
+                required
+              />
             </div>
-          )}
-          <div className="mb-3">
-            <label className="form-label">Equipamento:</label>
-            <input
-              type="text"
-              name="equipamento"
-              value={formData.equipamento}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Tipo de Manutenção:</label>
-            <input
-              type="text"
-              name="tipoManutencao"
-              value={formData.tipoManutencao}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Custo (R$):</label>
-            <input
-              type="number"
-              name="custo"
-              value={formData.custo}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Data da Manutenção:</label>
-            <input
-              type="date"
-              name="dataManutencao"
-              value={formData.dataManutencao}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
-          </div>
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              name="foiConcluida"
-              checked={formData.foiConcluida}
-              onChange={handleChange}
-              id="concluidaCheck"
-            />
-            <label className="form-check-label" htmlFor="concluidaCheck">
-              Manutenção Concluída
-            </label>
-          </div>
-          <div className="d-flex justify-content-end">
-            <button type="submit" className="btn btn-success me-2">
-              {manutencao?.id ? 'Atualizar' : 'Salvar'}
-            </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
-              Cancelar
-            </button>
-          </div>
-        </form>
+            <div className="mb-3">
+              <label className="form-label">Tipo de Manutenção:</label>
+              <input
+                type="text"
+                name="tipoManutencao"
+                value={formData.tipoManutencao}
+                onChange={handleChange}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Custo (R$):</label>
+              <input
+                type="number"
+                name="custo"
+                value={formData.custo}
+                onChange={handleChange}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Data da Manutenção:</label>
+              <input
+                type="date"
+                name="dataManutencao"
+                value={formData.dataManutencao}
+                onChange={handleChange}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="form-check mb-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="foiConcluida"
+                checked={formData.foiConcluida}
+                onChange={handleChange}
+                id="concluidaCheck"
+              />
+              <label className="form-check-label" htmlFor="concluidaCheck">
+                Manutenção Concluída
+              </label>
+            </div>
+            <div className="d-flex justify-content-between mt-4">
+              <button type="submit" className="btn btn-primary w-50 me-2">
+                {manutencao?.id ? 'Atualizar' : 'Salvar'}
+              </button>
+              <button type="button" className="btn btn-outline-secondary w-50" onClick={onClose}>
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

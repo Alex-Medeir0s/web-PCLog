@@ -10,8 +10,6 @@ const ManutencaoList = () => {
 
   useEffect(() => {
     loadManutencoes();
-
-    // Se veio da tela de boas-vindas com a intenção de adicionar:
     if (location.state?.abrirFormulario) {
       setEditingManutencao({});
     }
@@ -44,55 +42,52 @@ const ManutencaoList = () => {
 
   return (
     <div className="container mt-5">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>📋 Controle de Manutenções</h3>
-        <button
-          className="btn btn-primary"
-          onClick={() => setEditingManutencao({})}
-        >
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="text-primary">📋 Manutenções Registradas</h2>
+        <button className="btn btn-success btn-lg" onClick={() => setEditingManutencao({})}>
           + Nova Manutenção
         </button>
       </div>
 
-      <table className="table table-hover table-bordered shadow-sm">
-        <thead className="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Equipamento</th>
-            <th>Tipo</th>
-            <th>Custo</th>
-            <th>Data</th>
-            <th>Concluída</th>
-            <th className="text-center">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {manutencoes.map((m) => (
-            <tr key={m.id}>
-              <td>{m.id}</td>
-              <td>{m.equipamento}</td>
-              <td>{m.tipoManutencao}</td>
-              <td>R$ {parseFloat(m.custo).toFixed(2)}</td>
-              <td>{m.dataManutencao}</td>
-              <td>{m.foiConcluida ? '✅' : '❌'}</td>
-              <td className="text-center">
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEdit(m)}
-                >
-                  ✏️ Editar
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(m.id)}
-                >
-                  🗑️ Excluir
-                </button>
-              </td>
+      <div className="table-responsive shadow rounded">
+        <table className="table table-striped align-middle">
+          <thead className="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Equipamento</th>
+              <th>Tipo</th>
+              <th>Custo</th>
+              <th>Data</th>
+              <th>Status</th>
+              <th className="text-center">Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {manutencoes.map((m) => (
+              <tr key={m.id}>
+                <td>{m.id}</td>
+                <td>{m.equipamento}</td>
+                <td>{m.tipoManutencao}</td>
+                <td>R$ {parseFloat(m.custo).toFixed(2)}</td>
+                <td>{m.dataManutencao}</td>
+                <td>
+                  <span className={`badge ${m.foiConcluida ? 'bg-success' : 'bg-danger'}`}>
+                    {m.foiConcluida ? 'Concluída' : 'Pendente'}
+                  </span>
+                </td>
+                <td className="text-center">
+                  <button className="btn btn-outline-warning btn-sm me-2" onClick={() => handleEdit(m)}>
+                    ✏️ Editar
+                  </button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(m.id)}>
+                    🗑️ Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {editingManutencao && (
         <ManutencaoForm

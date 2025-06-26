@@ -16,7 +16,7 @@ const WelcomeScreen = () => {
       <div style={styles.rightSide}>
         <div style={styles.card}>
           <h3 style={styles.title}>Bem-vindo ao PCLog</h3>
-          <p style={styles.subtitle}>Gerencie suas manutenções com facilidade</p>
+          <p style={styles.subtitle}>Cadastre serviços de TI e acompanhe as manutenções</p>
 
           <button
             style={styles.primaryButton}
