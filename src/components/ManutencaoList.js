@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { getAllManutencoes, deleteManutencao } from '../services/manutencaoService';
 import ManutencaoForm from './ManutencaoForm';
 
 const ManutencaoList = () => {
   const [manutencoes, setManutencoes] = useState([]);
   const [editingManutencao, setEditingManutencao] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     loadManutencoes();
+
+    // Se veio da tela de boas-vindas com a intenção de adicionar:
+    if (location.state?.abrirFormulario) {
+      setEditingManutencao({});
+    }
   }, []);
 
   const loadManutencoes = async () => {
@@ -39,7 +46,10 @@ const ManutencaoList = () => {
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>📋 Controle de Manutenções</h3>
-        <button className="btn btn-primary" onClick={() => setEditingManutencao({})}>
+        <button
+          className="btn btn-primary"
+          onClick={() => setEditingManutencao({})}
+        >
           + Nova Manutenção
         </button>
       </div>

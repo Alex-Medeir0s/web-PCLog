@@ -60,11 +60,17 @@ const WelcomeScreen = () => {
         Cadastre serviços de TI e acompanhe as manutenções
       </p>
 
-      <button style={styles.buttonPrimary} onClick={() => navigate('/manutencoes')}>
+      <button
+        style={styles.buttonPrimary}
+        onClick={() => navigate('/manutencoes', { state: { abrirFormulario: true } })}
+      >
         Adicionar
       </button>
 
-      <button style={styles.linkButton} onClick={() => navigate('/manutencoes')}>
+      <button
+        style={styles.linkButton}
+        onClick={() => navigate('/manutencoes')}
+      >
         Ver Manutenções
       </button>
     </div>
