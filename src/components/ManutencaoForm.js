@@ -6,6 +6,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
     id: '',
     equipamento: '',
     tipoManutencao: '',
+    cliente: '',
     custo: '',
     dataManutencao: '',
     foiConcluida: false,
@@ -17,6 +18,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
         id: manutencao.id || '',
         equipamento: manutencao.equipamento || '',
         tipoManutencao: manutencao.tipoManutencao || '',
+        cliente: manutencao.cliente || '',
         custo: manutencao.custo || '',
         dataManutencao: manutencao.dataManutencao || '',
         foiConcluida: manutencao.foiConcluida || false,
@@ -74,6 +76,17 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   type="text"
                   name="tipoManutencao"
                   value={formData.tipoManutencao}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Cliente:</label>
+                <input
+                  type="text"
+                  name="cliente"
+                  value={formData.cliente}
                   onChange={handleChange}
                   className="form-control"
                   required

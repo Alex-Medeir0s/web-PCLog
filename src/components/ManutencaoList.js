@@ -56,6 +56,7 @@ const ManutencaoList = () => {
               <th>ID</th>
               <th>Equipamento</th>
               <th>Tipo</th>
+              <th>Cliente</th>
               <th>Custo</th>
               <th>Data</th>
               <th>Status</th>
@@ -68,6 +69,7 @@ const ManutencaoList = () => {
                 <td>{m.id}</td>
                 <td>{m.equipamento}</td>
                 <td>{m.tipoManutencao}</td>
+                <td>{m.cliente}</td>
                 <td>R$ {parseFloat(m.custo).toFixed(2)}</td>
                 <td>{m.dataManutencao}</td>
                 <td>
