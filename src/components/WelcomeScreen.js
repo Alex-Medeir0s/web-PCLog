@@ -1,80 +1,107 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo-pclog.png'; // ajuste o caminho conforme necessário
+import logo from '../assets/logo-pclog.png';
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
 
-  const styles = {
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      padding: '2rem',
-      backgroundColor: '#fff',
-      textAlign: 'center',
-    },
-    logo: {
-      width: '300px',
-      height: 'auto',
-      marginBottom: '30px',
-    },
-    title: {
-      fontSize: '2rem',
-      fontWeight: 'bold',
-      color: '#007bff',
-      marginBottom: '10px',
-    },
-    subtitle: {
-      fontSize: '1.1rem',
-      color: '#666',
-      marginBottom: '30px',
-    },
-    buttonPrimary: {
-      backgroundColor: '#007bff',
-      color: '#fff',
-      border: 'none',
-      padding: '10px 30px',
-      fontSize: '1rem',
-      borderRadius: '25px',
-      marginBottom: '15px',
-      cursor: 'pointer',
-    },
-    linkButton: {
-      background: 'none',
-      border: 'none',
-      color: '#007bff',
-      fontSize: '1rem',
-      cursor: 'pointer',
-      textDecoration: 'underline',
-    },
-  };
-
   return (
-    <div style={styles.container}>
-      <img src={logo} alt="Logo PCLog" style={styles.logo} />
-      <h1 style={styles.title}>Bem-vindo ao PCLog</h1>
-      <p style={styles.subtitle}>
-        Cadastre serviços de TI e acompanhe as manutenções
-      </p>
+    <div style={styles.wrapper}>
+      {/* Coluna Esquerda com a logo */}
+      <div style={styles.leftSide}>
+        <img src={logo} alt="Logo PCLog" style={styles.logoLeft} />
+      </div>
 
-      <button
-        style={styles.buttonPrimary}
-        onClick={() => navigate('/manutencoes', { state: { abrirFormulario: true } })}
-      >
-        Adicionar
-      </button>
+      {/* Coluna Direita */}
+      <div style={styles.rightSide}>
+        <div style={styles.card}>
+          <h3 style={styles.title}>Bem-vindo ao PCLog</h3>
+          <p style={styles.subtitle}>Gerencie suas manutenções com facilidade</p>
 
-      <button
-        style={styles.linkButton}
-        onClick={() => navigate('/manutencoes')}
-      >
-        Ver Manutenções
-      </button>
+          <button
+            style={styles.primaryButton}
+            onClick={() => navigate('/manutencoes', { state: { abrirFormulario: true } })}
+          >
+            Adicionar Manutenção
+          </button>
+
+          <button
+            style={styles.secondaryButton}
+            onClick={() => navigate('/manutencoes')}
+          >
+            Ver Manutenções
+          </button>
+        </div>
+      </div>
     </div>
   );
+};
+
+const styles = {
+  wrapper: {
+    display: 'flex',
+    height: '100vh',
+    backgroundColor: '#f0f4f8',
+  },
+  leftSide: {
+    flex: 1,
+    backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '2rem',
+  },
+  rightSide: {
+    flex: 1,
+    backgroundColor: '#00AEEF',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoLeft: {
+    width: '100%',
+    maxWidth: '650px',
+  },
+  card: {
+    backgroundColor: '#fff',
+    padding: '40px',
+    borderRadius: '12px',
+    width: '100%',
+    maxWidth: '380px',
+    boxShadow: '0 0 20px rgba(0,0,0,0.1)',
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: '24px',
+    color: '#333',
+    marginBottom: '8px',
+  },
+  subtitle: {
+    fontSize: '16px',
+    color: '#777',
+    marginBottom: '25px',
+  },
+  primaryButton: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
+  secondaryButton: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#fff',
+    color: '#007bff',
+    border: '2px solid #007bff',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+  },
 };
 
 export default WelcomeScreen;
