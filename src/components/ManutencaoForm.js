@@ -40,81 +40,86 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="container d-flex justify-content-center mt-5">
-      <div className="card shadow-lg p-4" style={{ maxWidth: '600px', width: '100%', borderRadius: '16px' }}>
-        <div className="card-body">
-          <h4 className="text-center mb-4 text-primary">
-            {manutencao?.id ? 'Editar Manutenção' : 'Nova Manutenção'}
-          </h4>
+    <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div className="modal-content shadow">
+          <div className="modal-header">
+            <h5 className="modal-title">
+              {manutencao?.id ? 'Editar Manutenção' : 'Nova Manutenção'}
+            </h5>
+            <button type="button" className="btn-close" onClick={onClose}></button>
+          </div>
           <form onSubmit={handleSubmit}>
-            {manutencao?.id && (
+            <div className="modal-body">
+              {manutencao?.id && (
+                <div className="mb-3">
+                  <label className="form-label">ID:</label>
+                  <input type="text" name="id" value={formData.id} readOnly className="form-control" />
+                </div>
+              )}
               <div className="mb-3">
-                <label className="form-label">ID:</label>
-                <input type="text" name="id" value={formData.id} readOnly className="form-control" />
+                <label className="form-label">Equipamento:</label>
+                <input
+                  type="text"
+                  name="equipamento"
+                  value={formData.equipamento}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
               </div>
-            )}
-            <div className="mb-3">
-              <label className="form-label">Equipamento:</label>
-              <input
-                type="text"
-                name="equipamento"
-                value={formData.equipamento}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
+              <div className="mb-3">
+                <label className="form-label">Tipo de Manutenção:</label>
+                <input
+                  type="text"
+                  name="tipoManutencao"
+                  value={formData.tipoManutencao}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Custo (R$):</label>
+                <input
+                  type="number"
+                  name="custo"
+                  value={formData.custo}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Data da Manutenção:</label>
+                <input
+                  type="date"
+                  name="dataManutencao"
+                  value={formData.dataManutencao}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="foiConcluida"
+                  checked={formData.foiConcluida}
+                  onChange={handleChange}
+                  id="foiConcluida"
+                />
+                <label className="form-check-label" htmlFor="foiConcluida">
+                  Manutenção Concluída
+                </label>
+              </div>
             </div>
-            <div className="mb-3">
-              <label className="form-label">Tipo de Manutenção:</label>
-              <input
-                type="text"
-                name="tipoManutencao"
-                value={formData.tipoManutencao}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Custo (R$):</label>
-              <input
-                type="number"
-                name="custo"
-                value={formData.custo}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Data da Manutenção:</label>
-              <input
-                type="date"
-                name="dataManutencao"
-                value={formData.dataManutencao}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="form-check mb-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                name="foiConcluida"
-                checked={formData.foiConcluida}
-                onChange={handleChange}
-                id="concluidaCheck"
-              />
-              <label className="form-check-label" htmlFor="concluidaCheck">
-                Manutenção Concluída
-              </label>
-            </div>
-            <div className="d-flex justify-content-between mt-4">
-              <button type="submit" className="btn btn-primary w-50 me-2">
+            <div className="modal-footer">
+              <button type="submit" className="btn btn-primary">
                 {manutencao?.id ? 'Atualizar' : 'Salvar'}
               </button>
-              <button type="button" className="btn btn-outline-secondary w-50" onClick={onClose}>
+              <button type="button" className="btn btn-secondary" onClick={onClose}>
                 Cancelar
               </button>
             </div>
