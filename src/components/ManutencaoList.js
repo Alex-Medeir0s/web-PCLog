@@ -47,42 +47,34 @@ const ManutencaoList = () => {
     return true;
   });
 
-  const totalFiltrado = manutencoesFiltradas.reduce((soma, m) => {
-    return soma + (parseFloat(m.custo) || 0);
-  }, 0);
+  const totalFiltrado = manutencoesFiltradas.reduce((soma, m) => soma + (parseFloat(m.custo) || 0), 0);
 
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="text-primary">📋 Manutenções Registradas</h2>
-        <button className="btn btn-success btn-lg" onClick={() => setEditingManutencao({})}>
-          + Nova Manutenção
+        <h2 className="text-primary fw-bold">📋 Manutenções Registradas</h2>
+        <button className="btn btn-success btn-lg shadow-sm" onClick={() => setEditingManutencao({})}>
+          <i className="bi bi-plus-circle me-2"></i>Nova Manutenção
         </button>
       </div>
 
       {/* Filtros */}
       <div className="mb-3 d-flex gap-3">
-        <button
-          className={`btn ${filtro === "todos" ? "btn-primary" : "btn-outline-primary"}`}
-          onClick={() => setFiltro("todos")}
-        >
-          Todos
-        </button>
-        <button
-          className={`btn ${filtro === "concluidos" ? "btn-success" : "btn-outline-success"}`}
-          onClick={() => setFiltro("concluidos")}
-        >
-          Concluídos
-        </button>
-        <button
-          className={`btn ${filtro === "pendentes" ? "btn-danger" : "btn-outline-danger"}`}
-          onClick={() => setFiltro("pendentes")}
-        >
-          Pendentes
-        </button>
+        {["todos", "concluidos", "pendentes"].map((item) => (
+          <button
+            key={item}
+            className={`btn ${filtro === item
+              ? item === "concluidos" ? "btn-success"
+              : item === "pendentes" ? "btn-danger"
+              : "btn-primary"
+              : `btn-outline-${item === "concluidos" ? "success" : item === "pendentes" ? "danger" : "primary"}`}`}
+            onClick={() => setFiltro(item)}
+          >
+            {item.charAt(0).toUpperCase() + item.slice(1)}
+          </button>
+        ))}
       </div>
 
-      {/* Total de serviços */}
       {filtro !== "todos" && (
         <div className="mb-3">
           <strong>
@@ -92,9 +84,8 @@ const ManutencaoList = () => {
         </div>
       )}
 
-      {/* Tabela */}
       <div className="table-responsive shadow rounded">
-        <table className="table table-striped align-middle">
+        <table className="table table-hover align-middle table-bordered border-light">
           <thead className="table-light">
             <tr>
               <th>ID</th>
@@ -117,15 +108,22 @@ const ManutencaoList = () => {
                 <td>R$ {parseFloat(m.custo).toFixed(2)}</td>
                 <td>{m.dataManutencao}</td>
                 <td>
-                  <span className={`badge ${m.foiConcluida ? 'bg-success' : 'bg-danger'}`}>
+                  <span className={`badge rounded-pill ${m.foiConcluida ? 'bg-success' : 'bg-danger'}`}>
+                    <i className={`bi ${m.foiConcluida ? 'bi-check-circle' : 'bi-clock'} me-1`}></i>
                     {m.foiConcluida ? 'Concluída' : 'Pendente'}
                   </span>
                 </td>
                 <td className="text-center">
-                  <button className="btn btn-outline-warning btn-sm me-2" onClick={() => handleEdit(m)}>
+                  <button
+                    className="btn btn-outline-warning btn-sm me-2"
+                    onClick={() => handleEdit(m)}
+                  >
                     ✏️ Editar
                   </button>
-                  <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(m.id)}>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => handleDelete(m.id)}
+                  >
                     🗑️ Excluir
                   </button>
                 </td>
