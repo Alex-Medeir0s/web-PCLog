@@ -6,6 +6,7 @@ import ManutencaoForm from './ManutencaoForm';
 const ManutencaoList = () => {
   const [manutencoes, setManutencoes] = useState([]);
   const [editingManutencao, setEditingManutencao] = useState(null);
+  const [filtro, setFiltro] = useState("todos");
   const location = useLocation();
 
   useEffect(() => {
@@ -40,6 +41,16 @@ const ManutencaoList = () => {
     setEditingManutencao(null);
   };
 
+  const manutencoesFiltradas = manutencoes.filter((m) => {
+    if (filtro === "concluidos") return m.foiConcluida;
+    if (filtro === "pendentes") return !m.foiConcluida;
+    return true;
+  });
+
+  const totalFiltrado = manutencoesFiltradas.reduce((soma, m) => {
+    return soma + (parseFloat(m.custo) || 0);
+  }, 0);
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -49,6 +60,39 @@ const ManutencaoList = () => {
         </button>
       </div>
 
+      {/* Filtros */}
+      <div className="mb-3 d-flex gap-3">
+        <button
+          className={`btn ${filtro === "todos" ? "btn-primary" : "btn-outline-primary"}`}
+          onClick={() => setFiltro("todos")}
+        >
+          Todos
+        </button>
+        <button
+          className={`btn ${filtro === "concluidos" ? "btn-success" : "btn-outline-success"}`}
+          onClick={() => setFiltro("concluidos")}
+        >
+          Concluídos
+        </button>
+        <button
+          className={`btn ${filtro === "pendentes" ? "btn-danger" : "btn-outline-danger"}`}
+          onClick={() => setFiltro("pendentes")}
+        >
+          Pendentes
+        </button>
+      </div>
+
+      {/* Total de serviços */}
+      {filtro !== "todos" && (
+        <div className="mb-3">
+          <strong>
+            Total em serviços {filtro === "concluidos" ? "concluídos" : "pendentes"}:{" "}
+          </strong>
+          R$ {totalFiltrado.toFixed(2)}
+        </div>
+      )}
+
+      {/* Tabela */}
       <div className="table-responsive shadow rounded">
         <table className="table table-striped align-middle">
           <thead className="table-light">
@@ -64,7 +108,7 @@ const ManutencaoList = () => {
             </tr>
           </thead>
           <tbody>
-            {manutencoes.map((m) => (
+            {manutencoesFiltradas.map((m) => (
               <tr key={m.id}>
                 <td>{m.id}</td>
                 <td>{m.equipamento}</td>
