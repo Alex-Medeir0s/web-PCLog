@@ -58,7 +58,6 @@ const ManutencaoList = () => {
         </button>
       </div>
 
-      {/* Filtros */}
       <div className="mb-3 d-flex gap-3">
         {["todos", "concluidos", "pendentes"].map((item) => (
           <button
@@ -78,9 +77,9 @@ const ManutencaoList = () => {
       {filtro !== "todos" && (
         <div className="mb-3">
           <strong>
-            Total em serviços {filtro === "concluidos" ? "concluídos" : "pendentes"}:{" "}
+            Total em serviços {filtro === "concluidos" ? "concluídos" : "pendentes"}:
           </strong>
-          R$ {totalFiltrado.toFixed(2)}
+          {' '}R$ {totalFiltrado.toFixed(2)}
         </div>
       )}
 
@@ -92,6 +91,8 @@ const ManutencaoList = () => {
               <th>Equipamento</th>
               <th>Tipo</th>
               <th>Cliente</th>
+              <th>CEP</th>
+              <th>Endereço</th>
               <th>Custo</th>
               <th>Data</th>
               <th>Status</th>
@@ -105,6 +106,8 @@ const ManutencaoList = () => {
                 <td>{m.equipamento}</td>
                 <td>{m.tipoManutencao}</td>
                 <td>{m.cliente}</td>
+                <td>{m.cep || '-'}</td>
+                <td>{m.endereco || '-'}</td>
                 <td>R$ {parseFloat(m.custo).toFixed(2)}</td>
                 <td>{m.dataManutencao}</td>
                 <td>
@@ -114,16 +117,10 @@ const ManutencaoList = () => {
                   </span>
                 </td>
                 <td className="text-center">
-                  <button
-                    className="btn btn-outline-warning btn-sm me-2"
-                    onClick={() => handleEdit(m)}
-                  >
+                  <button className="btn btn-outline-warning btn-sm me-2" onClick={() => handleEdit(m)}>
                     ✏️ Editar
                   </button>
-                  <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => handleDelete(m.id)}
-                  >
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(m.id)}>
                     🗑️ Excluir
                   </button>
                 </td>

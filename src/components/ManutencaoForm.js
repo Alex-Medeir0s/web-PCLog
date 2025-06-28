@@ -10,6 +10,8 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
     custo: '',
     dataManutencao: '',
     foiConcluida: false,
+    cep: '',
+    endereco: '',
   });
 
   useEffect(() => {
@@ -22,6 +24,8 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
         custo: manutencao.custo || '',
         dataManutencao: manutencao.dataManutencao || '',
         foiConcluida: manutencao.foiConcluida || false,
+        cep: manutencao.cep || '',
+        endereco: manutencao.endereco || '',
       });
     }
   }, [manutencao]);
@@ -29,6 +33,32 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+  };
+
+  const handleCepChange = async (e) => {
+    const cep = e.target.value.replace(/\D/g, '');
+
+    setFormData((prev) => ({ ...prev, cep }));
+
+    if (cep.length === 8) {
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (!data.erro) {
+          setFormData((prev) => ({
+            ...prev,
+            endereco: `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`
+          }));
+        } else {
+          setFormData((prev) => ({ ...prev, endereco: 'CEP não encontrado' }));
+        }
+      } catch (error) {
+        setFormData((prev) => ({ ...prev, endereco: 'Erro ao buscar endereço' }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, endereco: '' }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -59,6 +89,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   <input type="text" name="id" value={formData.id} readOnly className="form-control" />
                 </div>
               )}
+
               <div className="mb-3">
                 <label className="form-label">Equipamento:</label>
                 <input
@@ -70,6 +101,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   required
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">Tipo de Manutenção:</label>
                 <input
@@ -81,6 +113,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   required
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">Cliente:</label>
                 <input
@@ -92,6 +125,31 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   required
                 />
               </div>
+
+              <div className="mb-3">
+                <label className="form-label">CEP:</label>
+                <input
+                  type="text"
+                  name="cep"
+                  value={formData.cep}
+                  onChange={handleCepChange}
+                  className="form-control"
+                  placeholder="Ex: 74600000"
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Endereço:</label>
+                <input
+                  type="text"
+                  name="endereco"
+                  value={formData.endereco}
+                  onChange={handleChange}
+                  className="form-control"
+                  readOnly
+                />
+              </div>
+
               <div className="mb-3">
                 <label className="form-label">Custo (R$):</label>
                 <input
@@ -103,6 +161,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   required
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">Data da Manutenção:</label>
                 <input
@@ -114,6 +173,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                   required
                 />
               </div>
+
               <div className="form-check">
                 <input
                   className="form-check-input"
@@ -128,6 +188,7 @@ const ManutencaoForm = ({ manutencao, onSubmit, onClose }) => {
                 </label>
               </div>
             </div>
+
             <div className="modal-footer">
               <button type="submit" className="btn btn-primary">
                 {manutencao?.id ? 'Atualizar' : 'Salvar'}
